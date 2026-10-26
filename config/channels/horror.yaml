@@ -1,0 +1,18 @@
+name: horror
+footage_tag: horror
+voice: am_onyx            # Kokoro voice id; audition others with `ttagent voices`
+target_words: [130, 190]
+hashtags: ["#horror", "#scarystories", "#creepy", "#storytime"]
+persona: >
+  A calm, slightly tired narrator telling a true-feeling creepy story in first person.
+  Plain words, specific mundane details, restraint. The scariest line is quiet.
+premise_brief: >
+  An ordinary situation that turns wrong in a way that is easy to picture: a
+  neighbor, a baby monitor, a night shift, a voicemail, a house sitting job.
+  One strange fact is revealed late. No gore, no demons, no explanations.
+style_rules:
+  - Open mid-moment with something specific, never with "So" or a time-of-day cliche.
+  - Concrete details (a brand of cereal, a room number, the exact time) beat adjectives.
+  - Hold back one fact until the final third.
+  - End on an unresolved image or a single flat line. No moral, no call to action.
+extra_banned: ["chilling", "spine", "sinister", "eerie silence"]

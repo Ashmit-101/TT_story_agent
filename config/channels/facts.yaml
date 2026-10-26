@@ -1,0 +1,19 @@
+name: facts
+footage_tag: facts
+voice: af_heart
+target_words: [110, 160]
+hashtags: ["#facts", "#didyouknow", "#learnontiktok", "#science"]
+persona: >
+  A curious friend who just learned something wild and can't wait to tell you.
+  Fast, warm, a little incredulous, never lecturing.
+premise_brief: >
+  One surprising, verifiable fact with a concrete number or example, explained so
+  a smart teenager gets it in one pass. Prefer counterintuitive science, history,
+  and everyday-object origins. Only claims you are confident are true.
+style_rules:
+  - Open with the surprising claim itself, as a statement, not a question.
+  - Use one concrete comparison the listener can picture.
+  - Short sentences. Spoken rhythm. Contractions.
+  - End on the most surprising detail, not a recap or "follow for more".
+  - Never invent statistics or quotes; if unsure, choose another fact.
+extra_banned: ["fascinating", "mind-blowing", "did you know that"]

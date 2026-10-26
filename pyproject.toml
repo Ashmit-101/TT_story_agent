@@ -1,0 +1,28 @@
+[project]
+name = "ttagent"
+version = "0.1.0"
+description = "Autonomous short-form video generation pipeline (script -> voice -> captions -> render -> quality gates). Final upload is manual."
+requires-python = ">=3.11"
+dependencies = [
+  "httpx>=0.27",
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+# Local TTS (Kokoro, Apache-2.0) and word-level alignment (faster-whisper, MIT).
+voice = ["kokoro-onnx>=0.4", "soundfile>=0.12"]
+align = ["faster-whisper>=1.0"]
+dev = ["pytest>=8"]
+
+[project.scripts]
+ttagent = "ttagent.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

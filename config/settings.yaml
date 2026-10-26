@@ -1,0 +1,42 @@
+llm:
+  base_url: http://127.0.0.1:11434/v1   # Ollama's OpenAI-compatible endpoint
+  model: qwen2.5:14b-instruct           # pick by RAM: 7-8B on 8-16GB, 14B on 24GB+
+  timeout_s: 300
+  premise_temperature: 1.0
+  draft_temperature: 0.9
+  edit_temperature: 0.5
+
+script:
+  candidates: 3          # drafts generated per run; best by quality score is kept
+  hook_candidates: 6
+  max_regenerations: 3   # retries if the AI-sounding filter rejects a draft
+
+voice:
+  engine: kokoro
+  model_path: models/kokoro-v1.0.onnx
+  voices_path: models/voices-v1.0.bin
+  speed: 1.08
+
+align:
+  engine: faster-whisper
+  model: small.en       # runs on CPU on Apple Silicon via CTranslate2
+  compute_type: int8
+
+video:
+  width: 1080
+  height: 1920
+  fps: 30
+  crf: 20
+  encoder: libx264      # on a Mac mini set to h264_videotoolbox for faster encodes
+
+gates:
+  min_duration_s: 20
+  max_duration_s: 75
+  target_lufs: -16
+  max_ai_score: 0.45    # 0 = natural, 1 = very AI-sounding (see script/filters.py)
+
+paths:
+  data_dir: data
+  output_dir: output
+  footage_dir: assets/footage
+  style_refs_dir: assets/style_refs
