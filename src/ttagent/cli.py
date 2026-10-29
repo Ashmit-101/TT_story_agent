@@ -11,6 +11,8 @@ import httpx
 from .captions.align import Aligner
 from .config import load_channel, load_settings
 from .db import Store
+from .learn.entry import import_csv, log_interactive, write_template
+from .learn.report import build_report
 from .llm.client import OpenAICompatClient
 from .pipeline import make_video
 from .tts.kokoro import KokoroTTS
@@ -40,6 +42,33 @@ def cmd_run(args: argparse.Namespace) -> int:
                 logging.exception("run failed: %s", exc)
                 failures += 1
     return 1 if failures and args.strict else 0
+
+
+def cmd_log(args: argparse.Namespace) -> int:
+    root = _root()
+    settings = load_settings(root)
+    store = Store(root / settings.paths.data_dir / "state.db")
+    hours = settings.learn.min_hours_before_logging
+    if args.template:
+        n = write_template(store, hours, Path(args.template))
+        print(f"Wrote {n} pending videos to {args.template}. Fill in the number columns, then run `ttagent log --csv`.")
+    elif args.csv:
+        done, errors = import_csv(store, Path(args.csv))
+        print(f"Imported {done} results.")
+        for e in errors:
+            print("  !!", e)
+        return 1 if errors else 0
+    else:
+        print(f"Logged {log_interactive(store, hours)} results.")
+    return 0
+
+
+def cmd_report(_: argparse.Namespace) -> int:
+    root = _root()
+    settings = load_settings(root)
+    store = Store(root / settings.paths.data_dir / "state.db")
+    print(build_report(store, ["horror", "facts"], settings))
+    return 0
 
 
 def cmd_doctor(_: argparse.Namespace) -> int:
@@ -77,6 +106,12 @@ def main() -> None:
     run.add_argument("--count", type=int, default=1, help="videos per channel")
     run.add_argument("--strict", action="store_true", help="non-zero exit if any video fails its gates")
     run.set_defaults(fn=cmd_run)
+    lg = sub.add_parser("log", help="enter TikTok results for videos you posted")
+    lg.add_argument("--template", help="write a CSV of pending videos to fill in")
+    lg.add_argument("--csv", help="import a filled-in CSV")
+    lg.set_defaults(fn=cmd_log)
+    rp = sub.add_parser("report", help="show which hook styles and topics are performing")
+    rp.set_defaults(fn=cmd_report)
     doc = sub.add_parser("doctor", help="check the environment")
     doc.set_defaults(fn=cmd_doctor)
     args = parser.parse_args()

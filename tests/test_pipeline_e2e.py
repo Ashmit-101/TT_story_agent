@@ -19,15 +19,15 @@ from ttagent.pipeline import make_video
 pytestmark = pytest.mark.skipif(not shutil.which("ffmpeg"), reason="ffmpeg not installed")
 
 SCRIPT = (
-    "The night shift ended at six. I clocked out and walked to my car in the empty lot. "
+    "The night shift ended at six. I walked to my car in the empty lot. "
     "Someone had parked right behind it. A grey van. Engine off, windows fogged from the inside. "
-    "I stood there longer than I should have. Then the fog on the driver's window cleared in a small circle, "
-    "like someone wiped it with a thumb. I couldn't see a face. Just the circle, and a bit of orange light. "
-    "I went back inside and asked Dana at the desk to walk me out. She looked at the lot on the camera feed and "
-    "said there was no van. Only my car. I checked the footage myself. She was right. "
-    "My car was alone in the frame, and the driver's window was fogged from the inside. "
-    "I never found out who wiped it. I park under the light now, near the door. "
-    "Every morning, when I get back to the car, there's a clean little circle in the glass. "
+    "Then the fog on the driver's window cleared in a small circle, like someone wiped it with a thumb. "
+    "I couldn't see a face. Just the circle, and a bit of orange light. "
+    "I went back inside and asked Dana at the desk to walk me out. She checked the camera feed and "
+    "said there was no van. Only my car. I watched the footage myself. She was right. "
+    "My car sat alone in the frame, and the driver's window was fogged from the inside. "
+    "I park under the light now, near the door. "
+    "Every morning there's a clean little circle in the glass. "
     "Always on the inside. Always at the height of a thumb."
 )
 
@@ -76,3 +76,7 @@ def test_full_pipeline_produces_passing_package(tmp_path):
     meta = json.loads((result.folder / "metadata.json").read_text())
     assert meta["ai_generated_label_required"] is True and meta["passed_all_gates"] is True
     assert store.recent_premises("horror")  # premise remembered to avoid repeats
+    exp = store.experiment(result.exp_id)
+    assert exp and exp["channel"] == "horror" and exp["hook_style"] in channel.hook_styles
+    assert exp["topic"] in channel.topics and exp["duration_s"] == 28.0
+    assert meta["experiment"]["id"] == result.exp_id

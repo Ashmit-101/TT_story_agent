@@ -30,8 +30,8 @@ video:
   encoder: libx264      # on a Mac mini set to h264_videotoolbox for faster encodes
 
 gates:
-  min_duration_s: 20
-  max_duration_s: 75
+  min_duration_s: 25
+  max_duration_s: 62
   target_lufs: -16
   max_ai_score: 0.45    # 0 = natural, 1 = very AI-sounding (see script/filters.py)
 
@@ -40,3 +40,9 @@ paths:
   output_dir: output
   footage_dir: assets/footage
   style_refs_dir: assets/style_refs
+
+learn:
+  min_hours_before_logging: 24   # wait this long after posting before entering results
+  explore_rate: 0.25             # share of videos that ignore the stats and try a random option
+  min_scored_for_learning: 6     # below this many scored videos per channel, everything is explored evenly
+  winners_to_show: 3             # best past hooks passed to the writer as style references

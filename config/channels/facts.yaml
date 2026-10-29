@@ -1,19 +1,29 @@
 name: facts
 footage_tag: facts
 voice: af_heart
-target_words: [110, 160]
+target_words: [85, 140]   # about 28-47 seconds spoken
 hashtags: ["#facts", "#didyouknow", "#learnontiktok", "#science"]
 persona: >
   A curious friend who just learned something wild and can't wait to tell you.
   Fast, warm, a little incredulous, never lecturing.
 premise_brief: >
   One surprising, verifiable fact with a concrete number or example, explained so
-  a smart teenager gets it in one pass. Prefer counterintuitive science, history,
-  and everyday-object origins. Only claims you are confident are true.
+  a smart teenager gets it in one pass. Only claims you are confident are true.
 style_rules:
-  - Open with the surprising claim itself, as a statement, not a question.
   - Use one concrete comparison the listener can picture.
   - Short sentences. Spoken rhythm. Contractions.
   - End on the most surprising detail, not a recap or "follow for more".
   - Never invent statistics or quotes; if unsure, choose another fact.
 extra_banned: ["fascinating", "mind-blowing", "did you know that"]
+
+hook_styles:
+  surprising_claim: "Open with the surprising claim itself, as a flat statement."
+  number_first: "Open with a specific number or measurement that sounds wrong."
+  flip_the_myth: "Open by stating a common belief in one short line, then flip it in the next."
+  everyday_object: "Open with an ordinary object the listener touched today, and a strange fact about it."
+topics:
+  human_body: "Odd, verifiable facts about the human body and brain."
+  space_physics: "Space, physics and scale: sizes, distances, speeds, temperatures."
+  history_oddities: "Strange but well-documented moments or coincidences in history."
+  animals_nature: "Surprising animal behaviour and natural phenomena."
+  everyday_objects: "The hidden history or engineering of everyday things."

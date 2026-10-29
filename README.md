@@ -26,6 +26,31 @@ ttagent run --channel horror facts --count 2
 
 Set `video.encoder: h264_videotoolbox` in `config/settings.yaml` for hardware-accelerated encodes on macOS.
 
+## Daily routine (2 videos a day: one horror, one facts)
+
+```bash
+ttagent run                         # one video per channel (horror + facts)
+# review output/<date>/<video>/ and post manually (AI label on)
+ttagent log                         # 24h+ after posting: enter views / avg watch time / shares / saves
+ttagent report                      # which hook styles and topics are winning
+```
+
+## Feedback loop
+
+Every video is tagged with the variables the loop controls: a **hook style** and a **topic** (defined per channel in
+`config/channels/*.yaml`), plus a short video ID. After you log results, each video gets one score:
+70% retention (average watch time / duration; above 1.0 means rewatches) and 30% weighted shares/saves/comments/likes
+per view. Views alone are not scored, because they mostly measure how widely TikTok chose to show the video.
+
+For the next video the loop picks a hook style and a topic with Thompson sampling: options that beat the channel's
+median score are picked more often, a quarter of videos ignore the stats and explore, and until a channel has 6 scored
+videos every option is tried evenly. Once there is enough data, the opening lines of the top 3 videos are given to the
+writer as style references. Fill results in with `ttagent log` (prompts), or `ttagent log --template pending.csv`,
+fill the numbers in, and `ttagent log --csv pending.csv`.
+
+Limits: about 30 videos per niche per month is little data. Treat options with fewer than ~5 videos as noise.
+Both niches share one account, so the loop also lets you compare the two channels' scores to see if mixing hurts.
+
 ## Scheduling
 
 Use `launchd` (or cron) to run `ttagent run --count 3` daily. Each video lands in

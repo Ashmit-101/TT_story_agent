@@ -38,6 +38,8 @@ class Channel:
     premise_brief: str
     style_rules: list[str]
     extra_banned: list[str] = field(default_factory=list)
+    hook_styles: dict[str, str] = field(default_factory=dict)
+    topics: dict[str, str] = field(default_factory=dict)
 
 
 def load_channel(root: Path, name: str) -> Channel:
@@ -56,6 +58,8 @@ def load_channel(root: Path, name: str) -> Channel:
         premise_brief=raw["premise_brief"].strip(),
         style_rules=list(raw["style_rules"]),
         extra_banned=list(raw.get("extra_banned", [])),
+        hook_styles=dict(raw.get("hook_styles", {})),
+        topics=dict(raw.get("topics", {})),
     )
 
 

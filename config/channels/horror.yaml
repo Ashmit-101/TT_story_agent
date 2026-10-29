@@ -1,18 +1,29 @@
 name: horror
 footage_tag: horror
-voice: am_onyx            # Kokoro voice id; audition others with `ttagent voices`
-target_words: [130, 190]
+voice: am_onyx            # Kokoro voice id; audition others in the Kokoro voice list
+target_words: [95, 150]   # about 32-50 seconds spoken
 hashtags: ["#horror", "#scarystories", "#creepy", "#storytime"]
 persona: >
   A calm, slightly tired narrator telling a true-feeling creepy story in first person.
   Plain words, specific mundane details, restraint. The scariest line is quiet.
 premise_brief: >
-  An ordinary situation that turns wrong in a way that is easy to picture: a
-  neighbor, a baby monitor, a night shift, a voicemail, a house sitting job.
+  An ordinary situation that turns wrong in a way that is easy to picture.
   One strange fact is revealed late. No gore, no demons, no explanations.
 style_rules:
-  - Open mid-moment with something specific, never with "So" or a time-of-day cliche.
   - Concrete details (a brand of cereal, a room number, the exact time) beat adjectives.
   - Hold back one fact until the final third.
   - End on an unresolved image or a single flat line. No moral, no call to action.
 extra_banned: ["chilling", "spine", "sinister", "eerie silence"]
+
+# Experiment variables. The feedback loop picks one of each per video and learns which perform best.
+hook_styles:
+  mid_action: "Open in the middle of a specific moment that is already going wrong. No setup, no scene-setting."
+  flat_statement: "Open with one calm, unsettling statement of fact, stated plainly."
+  odd_detail: "Open with a hyper-specific odd detail (a time, a number, an object) that begs for an explanation."
+  confession: "Open with a short first-person admission, as if telling a secret."
+topics:
+  night_shift: "Someone working alone at night: a warehouse, hospital, gas station, security desk."
+  home_alone: "Something wrong inside a home when the narrator is alone: a monitor, a voice, a door."
+  neighbors: "A neighbor, a landlord, or the people next door who are slightly off."
+  technology: "A phone, camera, smart speaker, or voicemail that does something it should not."
+  roads_travel: "A road trip, a rideshare, a hotel stay, or a late train."
